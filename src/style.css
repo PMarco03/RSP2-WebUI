@@ -30,7 +30,7 @@ h1 {
   transition: all 0.3s ease;
 }
 .override {
-  border: 1px solid #ef4444;
+  border: 1px solid var(--red);
 }
 
 .status-card:hover {
@@ -59,19 +59,19 @@ h1 {
 }
 
 .status-indicator.on {
-  background: #10b981;
-  box-shadow: 0 0 16px #10b981;
+  background: var(--green);
+  box-shadow: 0 0 16px var(--green);
 }
 
 .status-indicator.off {
-  background: #ef4444;
-  box-shadow: 0 0 16px #ef4444;
+  background: var(--red);
+  box-shadow: 0 0 16px var(--red);
 }
 
 .override-btn {
   width: 100%;
   padding: 12px;
-  background: #0078d4;
+  background: var(--blue);
   color: white;
   border: none;
   border-radius: 8px;
@@ -91,7 +91,7 @@ h1 {
 }
 
 .override-btn.active {
-  background: #10b981;
+  background: var(--green);
 }
 
 .programming-section {
@@ -107,7 +107,7 @@ h1 {
   background: #1f1f1f;
   padding: 20px;
   border-radius: 10px;
-  border-left: 4px solid #0078d4;
+  border-left: 4px solid var(--blue);
 }
 
 .valve-program h3 {
@@ -147,7 +147,7 @@ h1 {
 
 .input-field input:focus {
   outline: none;
-  border-color: #0078d4;
+  border-color: var(--blue);
   box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
 }
 
@@ -164,13 +164,13 @@ h1 {
   transition: all 0.2s ease;
 }
 .neutral {
-  background-color: #0078d4;
+  background-color: var(--blue);
 }
 .disable {
-  background-color: #10b981;
+  background-color: var(--green);
 }
 .enable {
-  background-color: #ef4444;
+  background-color: var(--red);
 }
 
 .buttons {

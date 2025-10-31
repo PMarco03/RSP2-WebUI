@@ -19,7 +19,7 @@ function onDurationChange(e) {
 
 <template>
   <div class="valve-program">
-    <h3>Elettrovalvola {{ id }}</h3>
+    <h3> {{ id }}</h3>
     <div class="input-group">
       <div class="input-field">
         <label>Orario di accensione</label>

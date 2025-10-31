@@ -2,11 +2,17 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import StateComponent from "../components/StateComponent.vue";
 import ProgramComponent from "../components/ProgramComponent.vue";
+import MessageBoxComponent from "../components/MessageBoxComponent.vue";
 
-const url = "http://192.168.1.137:5000";
+//const url = "http://192.168.1.137:5000";
+const url = "http://192.168.1.182:5000";
 const valves = ref([]);
 const globalState = ref(false);
 let intervalId = null;
+
+const messageBoxText = ref("");
+const messageBoxResult = ref(false);
+const messageBoxState = ref(false);
 
 const fetchValves = async () => {
   try {
@@ -16,10 +22,10 @@ const fetchValves = async () => {
     globalState.value = data.GlobalState;
   } catch (err) {
     console.error("Fetch error:", err);
+    showMessage("Errore durante il caricamento", false);
   }
 };
 
-// nuovo polling leggero per soli stati
 const fetchStatus = async () => {
   try {
     const res = await fetch(url + "/status");
@@ -40,8 +46,8 @@ const fetchStatus = async () => {
 };
 
 onMounted(() => {
-  fetchValves(); // primo caricamento completo
-  intervalId = setInterval(fetchStatus, 2000); // polling solo stati
+  fetchValves();
+  intervalId = setInterval(fetchStatus, 2000);
 });
 
 onUnmounted(() => {
@@ -57,10 +63,21 @@ const updateValues = async () => {
       body: JSON.stringify(payload),
     });
     await fetchValves();
+    showMessage("Salvato", true);
   } catch (err) {
     console.error("POST error:", err);
+    showMessage("Errore", false);
   }
 };
+const showMessage = (message, result) => {
+  messageBoxText.value = message;
+  messageBoxResult.value = result;
+  messageBoxState.value = true;
+  setTimeout(() => {
+    messageBoxState.value = false;
+  }, 2000);
+};
+
 
 const toggleGlobalState = async () => {
   globalState.value = !globalState.value;
@@ -107,38 +124,22 @@ const updateDuration = (id, value) => {
 <template>
   <div class="container">
     <div class="status-grid">
-      <StateComponent
-        v-for="valve in valves"
-        :key="valve.Id"
-        :id="valve.Id"
-        :override-state="valve.OverrideState"
-        :state="valve.State"
-        :globalState="globalState"
-        @click="toggleOverride(valve.Id)"
-      />
+      <StateComponent v-for="valve in valves" :key="valve.Id" :id="valve.Id" :override-state="valve.OverrideState"
+        :state="valve.State" :globalState="globalState" @click="toggleOverride(valve.Id)" />
     </div>
     <div class="buttons">
-      <button
-        :class="['save-btn', globalState ? 'enable' : 'disable']"
-        @click="toggleGlobalState"
-      >
+      <button :class="['save-btn', globalState ? 'enable' : 'disable']" @click="toggleGlobalState">
         {{ globalState ? "Disabilita" : "Abilita" }}
       </button>
     </div>
     <div class="programming-section">
       <div class="valve-programming">
-        <ProgramComponent
-          v-for="valve in valves"
-          :key="valve.Id"
-          :id="valve.Id"
-          :time-start="valve.TimeStart"
-          :duration="valve.Duration"
-          @update:timeStart="updateTimeStart(valve.Id, $event)"
-          @update:duration="updateDuration(valve.Id, $event)"
-        />
+        <ProgramComponent v-for="valve in valves" :key="valve.Id" :id="valve.Id" :time-start="valve.TimeStart"
+          :duration="valve.Duration" @update:timeStart="updateTimeStart(valve.Id, $event)"
+          @update:duration="updateDuration(valve.Id, $event)" />
       </div>
     </div>
-
+    <MessageBoxComponent :active="messageBoxState" :message="messageBoxText" :result="messageBoxResult" />
     <div class="buttons">
       <button class="save-btn neutral" @click="updateValues">Salva</button>
     </div>

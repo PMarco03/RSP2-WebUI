@@ -9,4 +9,5 @@ import HomeView from './views/HomeView.vue';
 
 <style>
 @import url(./style.css);
+@import url(./assets/theme.css);
 </style>
