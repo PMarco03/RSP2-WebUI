@@ -2,7 +2,7 @@
 
 set -e
 
-APP_DIR="/home/RSP-WEBUI"
+APP_DIR="/home/RSP2-WebUI"
 
 cd "$APP_DIR"
 
