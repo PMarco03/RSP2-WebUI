@@ -2,32 +2,20 @@
 const props = defineProps({
   overrideState: Boolean,
   state: Boolean,
-  id: String,
-  globalState: Boolean,
+  id: String
 });
 
-const checkOn = () => {
-  if (props.overrideState != props.state) {
-    return props.overrideState;
-  } else {
-    return props.state;
-  }
-};
 </script>
 
 <template>
-  <button
-    :class="[
-      'status-card',
-      props.overrideState != props.state ? 'override' : '',
-    ]"
-  >
+  <button :class="[
+    'status-card',
+    props.overrideState  ? 'override' : '',
+  ]">
     <div class="status-header">
       <span class="valve-name">{{ props.id }}</span>
-      <div
-        :class="['status-indicator', props.globalState? (checkOn() ? 'on' : 'off') : '']"
-        :id="id"
-      ></div>
+      <div :class="['status-indicator',  (props.state ? 'on' : 'off') ]" :id="id">
+      </div>
     </div>
   </button>
 </template>
