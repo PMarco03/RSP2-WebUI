@@ -2,7 +2,7 @@
 
 set -e
 
-APP_DIR="/home/vue-app"
+APP_DIR="/home/RSP-WEBUI"
 
 cd "$APP_DIR"
 
