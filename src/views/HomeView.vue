@@ -22,7 +22,7 @@ const fetchValves = async () => {
 // nuovo polling leggero per soli stati
 const fetchStatus = async () => {
   try {
-    const res = await fetch(url + "/status");
+    const res = await fetch(url + "/states");
     const data = await res.json();
 
     globalState.value = data.GlobalState;
