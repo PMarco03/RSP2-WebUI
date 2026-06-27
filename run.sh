@@ -6,7 +6,7 @@
 
 SITE_DIR="$(cd "$(dirname "$0")" && pwd)"
 WEB_ROOT="/var/www/html"
-PORT=2080
+PORT=80
 
 echo "==> Cartella sorgente : $SITE_DIR"
 echo "==> Destinazione      : $WEB_ROOT"
