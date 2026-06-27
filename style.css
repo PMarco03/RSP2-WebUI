@@ -1,0 +1,208 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:      #111;
+  --surface: #1a1a1a;
+  --card:    #222;
+  --border:  #2e2e2e;
+  --accent:  #4caf50;
+  --accent2: #1e6b21;
+  --muted:   #666;
+  --text:    #e8e8e8;
+  --text2:   #999;
+  --danger:  #e05252;
+  --radius:  10px;
+}
+
+/* ---------- BASE ---------- */
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: clamp(14px, 4vw, 16px);
+  line-height: 1.5;
+  padding: clamp(10px, 4vw, 24px);
+  min-height: 100dvh;
+}
+
+/* ---------- GLOBAL TOGGLE ---------- */
+.global-btn {
+  display: block;
+  width: 100%;
+  padding: clamp(12px, 3vw, 16px);
+  margin-bottom: clamp(12px, 3vw, 20px);
+  border: none;
+  border-radius: var(--radius);
+  font-size: clamp(14px, 4vw, 16px);
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  min-height: 48px;
+}
+.global-btn:active { opacity: 0.8; }
+.global-btn.on  { background: var(--accent2); color: #c8f5ca; }
+.global-btn.off { background: #2a1a1a; color: #c07070; }
+
+/* ---------- STATUS BAR ---------- */
+#statusBar {
+  font-size: clamp(11px, 3vw, 13px);
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: clamp(10px, 3vw, 16px);
+  letter-spacing: 0.03em;
+}
+
+/* ---------- BENTO GRID ---------- */
+/* mobile: 1 col — tablet (≥600px): 2 col — desktop (≥960px): 3 col */
+#app {
+  display: flex;
+flex-direction: column;
+  gap: 20px;
+}
+@media (min-width: 600px) {
+  #app { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 960px) {
+  #app { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* ---------- VALVE CARD ---------- */
+.row {
+  background: var(--card);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: clamp(12px, 3.5vw, 18px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(8px, 2.5vw, 12px);
+}
+
+.valve-header {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.valve-header b {
+  font-size: clamp(14px, 4vw, 16px);
+  font-weight: 500;
+  flex: 1;
+}
+.pin-label {
+  font-size: clamp(10px, 2.5vw, 12px);
+  color: var(--muted);
+  background: var(--surface);
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+/* ---------- DOT ---------- */
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.dot.green { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+.dot.red   { background: var(--danger); }
+.dot.grey  { background: var(--muted); }
+
+/* ---------- FIELDS ---------- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.field label {
+  font-size: clamp(10px, 2.5vw, 11px);
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.field input {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: clamp(13px, 3.5vw, 15px);
+  padding: clamp(7px, 2vw, 10px) 10px;
+  width: 100%;
+  outline: none;
+  min-height: 44px;          /* touch target */
+  -webkit-appearance: none;
+}
+.field input:focus { border-color: var(--accent); }
+
+/* ---------- SAVE BUTTON ---------- */
+.save-btn {
+  grid-column: 1 / -1;
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--text2);
+  font-size: clamp(12px, 3vw, 14px);
+  padding: clamp(8px, 2.5vw, 10px);
+  cursor: pointer;
+  min-height: 44px;
+  transition: background 0.12s, color 0.12s;
+}
+.save-btn:active { background: var(--accent2); color: #c8f5ca; }
+
+/* ---------- OVERRIDE ROW ---------- */
+.override-row {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding-top: clamp(8px, 2vw, 12px);
+  border-top: 0.5px solid var(--border);
+}
+.field-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+}
+.field-inline label {
+  font-size: clamp(11px, 3vw, 13px);
+  color: var(--text2);
+}
+.field-inline input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.field-inline select {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: clamp(12px, 3vw, 14px);
+  padding: 6px 10px;
+  outline: none;
+  cursor: pointer;
+  min-height: 44px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+.field-inline select:focus { border-color: var(--accent); }
+
+/* ---------- LOADING ---------- */
+.loading {
+  color: var(--muted);
+  text-align: center;
+  padding: 40px 0;
+  font-size: clamp(13px, 3.5vw, 15px);
+}
+
+/* ---------- LANDSCAPE PHONE (orientamento orizzontale) ---------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  body { padding: 8px 16px; }
+  .global-btn { padding: 10px; margin-bottom: 10px; }
+  #app { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
